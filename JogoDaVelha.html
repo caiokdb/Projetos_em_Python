@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+
+<html >
+<head>
+	<meta charset="utf-8" />
+	<title>Jooj da velha</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+		.jogo{
+			text-align: center;
+
+		}
+		button{
+		width: 60px;
+		height: 35px;
+		
+		text-align: center;
+		text-decoration: none;
+		}
+	</style>
+</head>
+
+<body>
+	<h1> Jogo da velha</h1>
+	<hr />
+	<div class="jogo">
+		<p title="">Para jogar clique no botão desejado no seu turno.</p>
+		<p id="jogador"> Vez do Jogador .</p>
+		<p id="restante">Jogadas Restantes: </p>
+			
+		<br />
+
+		<hr />
+		<div>
+			<button onclick="clicou(this)"  >Posição 1</button>
+			<button onclick="clicou(this)"  >Posição 2</button> 
+			<button onclick="clicou(this)"  >Posição 3</button><br /> <br />
+
+			<button onclick="clicou(this)"  >Posição 4</button> 
+			<button onclick="clicou(this)"  >Posição 5</button> 
+			<button onclick="clicou(this)"  >Posição 6</button><br /> <br />
+
+			<button onclick="clicou(this)"  >Posição 7</button> 
+			<button onclick="clicou(this)"  >Posição 8</button>
+			<button onclick="clicou(this)"  >Posição 9</button><br /><br />
+
+		</div>
+	</div>
+	<script>	
+		var jogador = 0;
+		var jogadasRestantes = 9;
+
+		window.onload = function () {
+			document.getElementById("jogador").innerHTML = "Vez do jogador " + jogador + ".";
+			document.getElementById("restante").innerHTML = "Jogadas restantes: " + jogadasRestantes + ".";
+		}
+
+		function clicou(id) {
+			if (id.innerHTML != "X" && id.innerHTML != "O") {
+				if (jogador == 0) {
+					jogador = 1;
+					id.innerHTML = "X";
+				}
+				else {
+					jogador = 0;
+					id.innerHTML = "O";
+				}
+				jogadasRestantes--;
+				checaVitoria();
+				document.getElementById("restante").innerHTML = "Jogadas restantes: " + jogadasRestantes + ".";
+				document.getElementById("jogador").innerHTML = "Vez do jogador " + jogador + ".";
+			} else {
+				alert("Jogada Invalida");
+			}
+			
+		}
+		function joojAcaba() {
+			alert("Ninguem ganhou.");
+			window.location.reload();
+		}
+		function checaVitoria() {
+			var espacito = document.body.getElementsByTagName('button');
+			var vazio = [];
+
+			for (var i = 0; i < espacito.length; i++) {
+				if (espacito[i].innerHTML != "X" && espacito[i].innerHTML != "O") {
+					vazio.push(espacito[i]);
+				}
+			}
+			if ((espacito[0].innerHTML == "X" && espacito[4].innerHTML == "X" && espacito[8].innerHTML == "X") || (espacito[2].innerHTML == "X" && espacito[4].innerHTML == "X" && espacito[6].innerHTML == "X"))
+			{
+				alert("Jogador 1 ganhou!");
+				window.location.reload();
+			}
+			else if ((espacito[0].innerHTML == "O" && espacito[4].innerHTML == "O" && espacito[8].innerHTML == "O") || (espacito[2].innerHTML == "O" && espacito[4].innerHTML == "O" && espacito[6].innerHTML == "O"))
+			{
+				alert("Jogador 2 ganhou!");
+				window.location.reload();
+			}
+			for (var j = 0; j < 3; j++) {
+				if (espacito[j].innerHTML == "X" && espacito[j + 3].innerHTML == "X" && espacito[j + 6].innerHTML == "X") {
+					alert("Jogador 1 ganhou!");
+					window.location.reload();
+				} else if (espacito[j].innerHTML == "O" && espacito[j + 3].innerHTML == "O" && espacito[j + 6].innerHTML == "O") {
+					alert("Jogador 2 ganhou!");
+					window.location.reload();
+				} else if (espacito[j * 3].innerHTML == "X" && espacito[j * 3 + 1].innerHTML == "X" && espacito[j * 3 + 2].innerHTML == "X") {
+					alert("Jogador 1 ganhou!");
+					window.location.reload();
+				} else if (espacito[j * 3].innerHTML == "O" && espacito[j * 3 + 1].innerHTML == "O" && espacito[j * 3 + 2].innerHTML == "O") {
+					alert("Jogador 2 ganhou!");
+					window.location.reload();
+				}
+			}
+			if (vazio.length == 0) {
+				joojAcaba();
+			}
+			
+		}
+		
+	</script>
+</body>
+</html>
